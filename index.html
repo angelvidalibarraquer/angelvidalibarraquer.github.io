@@ -1,1 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Sign-In Práctica</title>
 
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        #boto-sortir {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        #missatge-benvinguda {
+            color: #4CAF50;
+            margin-bottom: 30px;
+        }
+    </style>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <meta name="google-signin-client_id" content="TU_CLIENT_ID.apps.googleusercontent.com">
+</head>
+<body>
+
+    <div 
+        id="g_id_onload"
+        data-client_id="881166305678-388loo9n9cbk5f9uqh23ttd8r3uqlha5.apps.googleusercontent.com"
+        data-callback="onSignIn"
+        data-auto_prompt="false"
+    ></div>
+
+    <h2 id="missatge-benvinguda" style="display:none;">¡Bienvenido/a, te has conectado correctamente!</h2>
+
+    <div 
+        class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-logo_alignment="left"
+    ></div>
+
+    <button 
+        id="boto-sortir"
+        style="display:none;"
+        onclick="signOut()">
+        Desconectar
+    </button>
+    
+    <script>
+        function onSignIn(response) {
+            // EXERCICI 3.8: Obtener y registrar el ID Token
+            var id_token = response.credential;
+            console.log("ID Token: " + id_token);
+
+            // EXERCICI 3.7 y 3.9: Mostrar/Ocultar elementos
+            document.getElementById('boto-sortir').style.display = 'block'; // Muestra el botón de desconexión
+            document.getElementById('missatge-benvinguda').style.display = 'block'; // Muestra el mensaje
+            document.querySelector('.g_id_signin').style.display = 'none'; // Oculta el botón de sign-in
+        }
+
+        function signOut() {
+            // Llama a la función de Google para desloguear
+            google.accounts.id.disableAutoSelect(); 
+
+            // EXERCICI 3.7 y 3.9: Mostrar/Ocultar elementos (volver al estado inicial)
+            document.getElementById('boto-sortir').style.display = 'none'; // Oculta el botón de desconexión
+            document.getElementById('missatge-benvinguda').style.display = 'none'; // Oculta el mensaje
+            document.querySelector('.g_id_signin').style.display = 'block'; // Muestra el botón de sign-in
+        }
+    </script>
+
+</body>
+</html>
